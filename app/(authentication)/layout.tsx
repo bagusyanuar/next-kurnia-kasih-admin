@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "../globals.css";
 import StyledComponentsRegistry from '../styled.component.registry'
+import { Providers } from '../StoreProvider'
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -16,12 +17,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={raleway.className}>
-        <StyledComponentsRegistry>
-          {children}
-        </StyledComponentsRegistry>
-      </body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <head>
+          <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></link>
+        </head>
+        <body className={raleway.className}>
+          <StyledComponentsRegistry>
+            {children}
+          </StyledComponentsRegistry>
+        </body>
+      </html>
+    </Providers>
   );
 }

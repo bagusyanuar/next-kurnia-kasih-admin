@@ -4,7 +4,7 @@ export const ColorPallete = {
     dark: 'var(--dark-color)',
     light: 'var(--light-color)',
     danger: 'var(--danger-color)',
-    prmaryShades: {
+    primaryShades: {
         shade10: 'color-mix(in srgb, black 10%, var(--primary-color))',
         shade20: 'color-mix(in srgb, black 20%, var(--primary-color))',
         shade30: 'color-mix(in srgb, black 30%, var(--primary-color))',

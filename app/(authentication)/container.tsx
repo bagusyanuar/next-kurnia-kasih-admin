@@ -2,6 +2,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import Form from './form'
 import { ColorPallete } from '@/components/color'
 
 const StyledContainer = styled.main`
@@ -16,7 +17,7 @@ const StyledContainer = styled.main`
 const Container = () => {
   return (
     <StyledContainer>
-      {/* <Card></Card> */}
+      <Form />
     </StyledContainer>
   )
 }
