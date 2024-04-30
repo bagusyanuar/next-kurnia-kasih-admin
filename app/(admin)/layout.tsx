@@ -3,7 +3,8 @@ import { Raleway } from "next/font/google";
 import "../globals.css";
 import StyledComponentsRegistry from '../styled.component.registry'
 import { Providers } from '../StoreProvider'
-
+import Sidebar from '@/components/navigation/sidebar'
+import 'remixicon/fonts/remixicon.css'
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         </head>
         <body className={raleway.className}>
           <StyledComponentsRegistry>
+            <Sidebar />
             {children}
           </StyledComponentsRegistry>
         </body>
