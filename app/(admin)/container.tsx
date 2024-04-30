@@ -1,5 +1,6 @@
 'use client'
 
+import { ColorPallete } from '@/components/color'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -11,12 +12,10 @@ interface IProps {
 
 
 const StyledContainer = styled.div`
-    padding-left: calc(250px + 1rem);
-    padding-top: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 1rem;
+    padding-left: 250px;
     height: 100vh;
     width: 100%;
+    background-color: ${ColorPallete.lightTint.tint80};
 `
 
 const ContentContainer = styled.div``

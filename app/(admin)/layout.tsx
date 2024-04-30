@@ -4,7 +4,10 @@ import "../globals.css";
 import StyledComponentsRegistry from '../styled.component.registry'
 import { Providers } from '../StoreProvider'
 import Sidebar from '@/components/navigation/sidebar'
+import Navbar from '@/components/navigation/navbar'
 import 'remixicon/fonts/remixicon.css'
+import Container from './container'
+import ContentContainer from './content.container'
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -27,7 +30,12 @@ export default function RootLayout({
         <body className={raleway.className}>
           <StyledComponentsRegistry>
             <Sidebar />
-            {children}
+            <Container>
+              <Navbar />
+              <ContentContainer>
+                {children}
+              </ContentContainer>
+            </Container>
           </StyledComponentsRegistry>
         </body>
       </html>

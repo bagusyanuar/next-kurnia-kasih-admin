@@ -31,7 +31,7 @@ const ItemContaier = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.25rem;
 `
 
 const Sidebar = () => {
@@ -40,8 +40,12 @@ const Sidebar = () => {
             <SidebarBrand />
             <ItemContaier>
                 <SidebarItem to='/dashboard' text='Dashboard' icon='ri-dashboard-fill' />
-                <SidebarItem to='/category' text='Category' icon='ri-price-tag-line' />
-                <SidebarItem to='/product' text='Product' icon='ri-motorbike-line' />
+                <SidebarItem to='/category' text='Motorbike Category' icon='ri-price-tag-line' />
+                <SidebarItem to='/category' text='Utility Category' icon='ri-bookmark-line' />
+                <SidebarItem to='/product' text='Motorbike Product' icon='ri-motorbike-line' />
+                <SidebarItem to='/product' text='Utility Product' icon='ri-instance-line' />
+                <SidebarItem to='/product' text='User Account' icon='ri-user-line' />
+                <SidebarItem to='/product' text='User Access' icon='ri-user-settings-line' />
             </ItemContaier>
         </Container>
     )

@@ -29,7 +29,7 @@ const Container = styled(Link)`
     }
 
     i {
-        margin-right: 0.5rem;
+        margin-right: 1rem;
     }
 
     span {
