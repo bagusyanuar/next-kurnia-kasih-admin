@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import styled from 'styled-components'
+import { ToastContainer } from 'react-toastify';
 import Card from '@/components/card/card'
 import InputText from '@/components/input/text/group/text.icon'
 import InputPassword from '@/components/input/password/group/password.icon'
@@ -12,10 +13,13 @@ import VerticalLogo from '@/public/assets/vertical-logo.png'
 //redux import
 import {
   LoginState,
-  SetUsername,
+  SetEmail,
   SetPassword
 } from '@/redux/login/slice'
+import { submit } from '@/redux/login/action'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { APIResponse } from '@/lib/util'
+import { showToast, ToastContent } from '@/components/toast'
 
 const Container = styled(Card)`
     width: 300px;
@@ -50,12 +54,34 @@ const Form: React.FC = () => {
   const StateLogin = useAppSelector(LoginState)
   const dispatch = useAppDispatch()
 
-  const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(SetUsername(e.currentTarget.value))
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(SetEmail(e.currentTarget.value))
   }
 
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(SetPassword(e.currentTarget.value))
+  }
+
+  const onSubmit = () => {
+    dispatch(submit()).then(response => {
+      const payload: APIResponse = response.payload as APIResponse
+      switch (payload.code) {
+        case 200:
+          showToast(<ToastContent theme='success' text={payload.message} />,
+            {
+              timeToClose: 2000,
+            })
+          break;
+        default:
+          showToast(<ToastContent theme='error' text={payload.message} />,
+            {
+              timeToClose: 2000,
+            })
+          break;
+      }
+
+      console.log(payload);
+    })
   }
 
   return (
@@ -63,11 +89,11 @@ const Form: React.FC = () => {
       <Image src={VerticalLogo} alt='img-logo' priority />
       <InputContainer>
         <InputText
-          value={StateLogin.Username}
+          value={StateLogin.Email}
           icon='bx bx-envelope'
           validator=''
           placeholder='email'
-          onChange={onChangeUsername}
+          onChange={onChangeEmail}
         />
         <InputPassword
           value={StateLogin.Password}
@@ -77,10 +103,16 @@ const Form: React.FC = () => {
           validator=''
           withShowPassword
         />
-        <Button onLoading={false}>
+        <Button
+          onLoading={StateLogin.LoadingLogin}
+          onClick={onSubmit}
+        >
           <span>Login</span>
         </Button>
       </InputContainer>
+      <ToastContainer
+        hideProgressBar
+      />
     </Container>
   )
 }

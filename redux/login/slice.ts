@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/redux/store'
 import initialState from './state'
-// import eventReducers from './events'
+import eventReducers from './event'
 
 const slice = createSlice({
     name: 'login',
     initialState,
     reducers: {
         Reset: () => initialState,
-        SetUsername: (state, action: PayloadAction<string>) => {
-            state.Username = action.payload
+        SetEmail: (state, action: PayloadAction<string>) => {
+            state.Email = action.payload
         },
         SetPassword: (state, action: PayloadAction<string>) => {
             state.Password = action.payload
@@ -18,12 +18,12 @@ const slice = createSlice({
             state.LoadingLogin = action.payload
         },
     },
-    // extraReducers: eventReducers,
+    extraReducers: eventReducers,
 })
 
 export const {
     Reset,
-    SetUsername,
+    SetEmail,
     SetPassword,
     SetLoadingLogin
 } = slice.actions

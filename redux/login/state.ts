@@ -1,11 +1,11 @@
 export type TState = {
-    Username: string
+    Email: string
     Password: string
     LoadingLogin: boolean
 }
 
 const initialState: TState = {
-    Username: '',
+    Email: '',
     Password: '',
     LoadingLogin: false
 }
