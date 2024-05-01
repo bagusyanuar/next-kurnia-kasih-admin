@@ -7,7 +7,7 @@ import { ColorPallete } from '../color'
 const StyledText = styled.p`
     line-height: 1;
     color: ${ColorPallete.darkTint.tint40};
-    font-size: 1em;
+    font-size: 0.8em;
 `
 interface IProps {
     text: string

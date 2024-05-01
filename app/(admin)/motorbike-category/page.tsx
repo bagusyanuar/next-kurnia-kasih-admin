@@ -1,13 +1,16 @@
-import ContentTitle from '@/components/typography/content.title'
-import ContentSubTitle from '@/components/typography/content.sub.title'
+import Title from './title'
+import Header from './header'
+import Container from './container'
 import Table from './table'
 
 export default function MotorbikeCategoryPage() {
     return (
         <main>
-            <ContentTitle text='Motorbike Category' />
-            <ContentSubTitle text='Manage motorbike categories' />
-            <Table />
+            <Title />
+            <Container>
+                <Header />
+                <Table />
+            </Container>
         </main>
     )
 }
