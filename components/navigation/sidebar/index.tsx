@@ -2,6 +2,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import { usePathname } from 'next/navigation'
 import SidebarBrand from './sidebar.brand'
 import SidebarItem from './sidebar.item'
 
@@ -35,12 +36,13 @@ const ItemContaier = styled.div`
 `
 
 const Sidebar = () => {
+    const pathName = usePathname()
     return (
         <Container>
             <SidebarBrand />
             <ItemContaier>
-                <SidebarItem to='/dashboard' text='Dashboard' icon='ri-dashboard-fill' />
-                <SidebarItem to='/category' text='Motorbike Category' icon='ri-price-tag-line' />
+                <SidebarItem to='/dashboard' text='Dashboard' icon='ri-dashboard-fill' className={`${pathName.startsWith('/dashboard') ? 'active' : ''}`} />
+                <SidebarItem to='/motorbike-category' text='Motorbike Category' icon='ri-price-tag-line' className={`${pathName.startsWith('/motorbike-category') ? 'active' : ''}`} />
                 <SidebarItem to='/category' text='Utility Category' icon='ri-bookmark-line' />
                 <SidebarItem to='/product' text='Motorbike Product' icon='ri-motorbike-line' />
                 <SidebarItem to='/product' text='Utility Product' icon='ri-instance-line' />
