@@ -7,6 +7,7 @@ import PageLength from './components/page.length'
 import Pagination from './components/pagination'
 import Header from './header'
 import Body from './body'
+import LoaderDots from '@/components/loader/loader.dots'
 import type { TColumn, HeaderSort, TSortOption } from './util'
 
 const Container = styled.div`
@@ -53,7 +54,7 @@ const Table = <T,>({
     onPerpageChange,
     onProcess = false,
     onSort,
-    loadingComponent = <div></div>,
+    loadingComponent = <LoaderDots height='24rem' />,
     scrollX = false,
     className = ''
 }: IProps<T>) => {
@@ -99,33 +100,38 @@ const Table = <T,>({
 
     return (
         <Container className={className}>
-            <ExtensionContainer>
-                <PageLength
-                    length={pageLength}
-                    value={perPage}
-                    onChange={handleChangePerPage}
-                />
-            </ExtensionContainer>
-            <TableContainer>
-                <TableContent scroll={scrollX}>
-                    <Header
-                        columns={columns}
-                        columnSort={columnSort}
-                        onColumnSort={onColumnSort}
-                        scroll={scrollX}
-                    />
-                    <Body
-                        columns={columns}
-                        data={data}
-                    />
-                </TableContent>
-            </TableContainer>
-            <Pagination
-                page={page}
-                totalPage={totalPage}
-                totalRows={totalRows}
-                onPageChange={onPageChange}
-            />
+            {
+                onProcess ? loadingComponent :
+                    <>
+                        <ExtensionContainer>
+                            <PageLength
+                                length={pageLength}
+                                value={perPage}
+                                onChange={handleChangePerPage}
+                            />
+                        </ExtensionContainer>
+                        <TableContainer>
+                            <TableContent scroll={scrollX}>
+                                <Header
+                                    columns={columns}
+                                    columnSort={columnSort}
+                                    onColumnSort={onColumnSort}
+                                    scroll={scrollX}
+                                />
+                                <Body
+                                    columns={columns}
+                                    data={data}
+                                />
+                            </TableContent>
+                        </TableContainer>
+                        <Pagination
+                            page={page}
+                            totalPage={totalPage}
+                            totalRows={totalRows}
+                            onPageChange={onPageChange}
+                        />
+                    </>
+            }
         </Container>
     )
 }

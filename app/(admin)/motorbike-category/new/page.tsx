@@ -3,16 +3,16 @@ import Content from '@/components/container/card.container'
 import Divider from '@/components/divider'
 import TitleSection from './section/title'
 import HeaderSection from './section/header'
-import TableSection from './section/table'
+import FormSection from './section/form'
 
-export default function MotorbikeCategoryPage() {
+export default function NewMotorbikeCategoryPage() {
     return (
         <MainContainer>
             <TitleSection />
             <Content>
                 <HeaderSection />
                 <Divider />
-                <TableSection />
+                <FormSection />
             </Content>
         </MainContainer>
     )

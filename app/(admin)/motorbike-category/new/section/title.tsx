@@ -6,17 +6,16 @@ import ContentSubTitle from '@/components/typography/content.sub.title'
 import styled from 'styled-components'
 
 const Container = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 1rem;
 `
-const Header = () => {
+
+const Title = () => {
     return (
         <Container>
-            <ContentTitle text='Data Category' />
+            <ContentTitle text='New Motorbike Category' />
+            <ContentSubTitle text='Create new motorbike categories' />
         </Container>
     )
 }
 
-export default Header
+export default Title

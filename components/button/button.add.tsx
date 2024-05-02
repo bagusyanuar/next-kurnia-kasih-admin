@@ -15,19 +15,23 @@ const StyledButton = styled.button`
     border-radius: 5px;
     transition: all ease-in-out 200ms;
 
+    i {
+        margin-right: 0.25rem;
+    }
+
     &:hover {
         background-color: ${ColorPallete.primaryShades.shade20};
     }
 `
 
 interface IProps {
-    children: React.ReactNode
+    text: string
     className?: string
     onClick?: () => void
 }
 
-const Button: React.FC<IProps> = ({
-    children,
+const ButtonADD: React.FC<IProps> = ({
+    text,
     onClick = () => { },
     className = ''
 }) => {
@@ -36,9 +40,10 @@ const Button: React.FC<IProps> = ({
             className={className}
             onClick={onClick}
         >
-            {children}
+            <i className="ri-add-line"></i>
+            <span>{text}</span>
         </StyledButton>
     )
 }
 
-export default Button
+export default ButtonADD

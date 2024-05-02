@@ -32,9 +32,9 @@ export default function RootLayout({
             <Sidebar />
             <Container>
               <Navbar />
-              <ContentContainer>
+              {/* <ContentContainer> */}
                 {children}
-              </ContentContainer>
+              {/* </ContentContainer> */}
             </Container>
           </StyledComponentsRegistry>
         </body>
