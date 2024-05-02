@@ -24,7 +24,7 @@ const StyledButton = styled.button`
     justify-content: center;
     background-color: ${ColorPallete.primary};
     color: whitesmoke;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 1rem;
     font-size: 0.8em;
     border-radius: 5px;
     transition: all ease-in-out 200ms;

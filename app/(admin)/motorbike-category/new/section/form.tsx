@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Divider from '@/components/divider'
 import InputText from '@/components/input/text/group/text'
 import InputFile from '@/components/input/file/group/dropzone'
-import ButtonSave from '@/components/button/button.save'
+import Button from '@/components/button/button.save'
 
 const Container = styled.div`
   width: 100%;
@@ -18,6 +18,10 @@ const ActionContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
+`
+
+const ButtonSave = styled(Button)`
+    width: fit-content;
 `
 
 const Form: React.FC = () => {
