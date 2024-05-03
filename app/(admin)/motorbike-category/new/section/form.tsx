@@ -2,19 +2,21 @@
 
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { ToastContainer } from 'react-toastify';
 import Divider from '@/components/divider'
 import InputText from '@/components/input/text/group/text'
 import InputFile from '@/components/input/file/group/dropzone'
 import Button from '@/components/button/button.save'
 import ModalConfirmation from '@/components/modal/modal.confirmation'
-
+import { showToast, ToastContent } from '@/components/toast'
+import { APIResponse } from '@/lib/util'
 //redux import
 import {
   MotorbikeCategoriesState,
   SetEntity,
   SetConfirmation
 } from '@/redux/motorbike-category/slice'
-// import { createNewCategory } from '@/redux/categories/action'
+import { Create } from '@/redux/motorbike-category/action'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 const Container = styled.div`
@@ -38,13 +40,13 @@ const Form: React.FC = () => {
   const StateMotorbikeCategory = useAppSelector(MotorbikeCategoriesState)
   const dispatch = useAppDispatch()
 
-  const [icon, setIcon] = useState<File | null>(null)
+  const [thumbnail, setThumbnail] = useState<File | null>(null)
 
   const onReceiveFiles = (files: File[]) => {
     if (files.length > 0) {
-      setIcon(files[0])
+      setThumbnail(files[0])
     } else {
-      setIcon(null)
+      setThumbnail(null)
     }
   }
 
@@ -53,6 +55,31 @@ const Form: React.FC = () => {
       key: 'Name',
       value: e.currentTarget.value
     }))
+  }
+
+  const onSubmitEvent = () => {
+    dispatch(SetConfirmation(true))
+  }
+
+  const onSubmit = () => {
+    dispatch(Create({ thumbnail })).then(response => {
+      const payload: APIResponse = response.payload as APIResponse
+      switch (payload.code) {
+        case 200:
+          showToast(<ToastContent theme='success' text={payload.message} />,
+            {
+              timeToClose: 2000,
+            })
+          break;
+        default:
+          showToast(<ToastContent theme='error' text={payload.message} />,
+            {
+              timeToClose: 2000,
+            })
+          break;
+      }
+    })
+
   }
 
   return (
@@ -72,13 +99,18 @@ const Form: React.FC = () => {
       />
       <Divider />
       <ActionContainer>
-        <ButtonSave onSave={false} />
+        <ButtonSave onSave={StateMotorbikeCategory.OnSaving} onClick={onSubmitEvent} />
       </ActionContainer>
       <ModalConfirmation
         open={StateMotorbikeCategory.OnConfirmation}
-        onAccept={() => { }}
-        onDenied={() => { }}
+        onAccept={() => { onSubmit() }}
+        onDenied={() => {
+          dispatch(SetConfirmation(false))
+        }}
         text='Are you sure to create new category?'
+      />
+      <ToastContainer
+        hideProgressBar
       />
     </Container>
   )

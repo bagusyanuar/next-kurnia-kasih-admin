@@ -22,3 +22,18 @@ export async function GET(request: Request) {
         return Response.json(response, { status: response.code })
     }
 }
+
+export async function POST(request: Request) {
+    try {
+        const form = await request.formData()
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+        const response: APIResponse = {
+            code: 200,
+            message: 'successfully create motorbike categories',
+        }
+        return Response.json(response, {status: response.code})
+    } catch (error: any | AxiosError) {
+        const response: APIResponse = ErrorParser(error)
+        return Response.json(response, { status: response.code })
+    }
+}

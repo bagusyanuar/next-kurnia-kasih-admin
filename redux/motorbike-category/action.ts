@@ -12,3 +12,23 @@ export const FindAll = createAsyncThunk<APIResponse, void, ThunkConfig>('motorbi
         return rejectWithValue(ErrorParser(error))
     }
 })
+
+export const Create = createAsyncThunk<APIResponse, { thumbnail: File | null }, ThunkConfig>('motorbikeCategory/Create', async ({ thumbnail }, { rejectWithValue, getState }) => {
+    try {
+        const state = getState()
+        const entity = state.motorbikeCategory.Entity
+        let form = new FormData()
+        form.append('name', entity.Name)
+        if (thumbnail !== null) {
+            form.append('thumbnail', thumbnail)
+        }
+        const response = await axios.post('/api/motorbike-category', form,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response.data
+    } catch (error: any | AxiosError) {
+        return rejectWithValue(ErrorParser(error))
+    }
+})

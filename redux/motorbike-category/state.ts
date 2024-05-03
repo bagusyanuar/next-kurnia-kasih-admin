@@ -15,6 +15,7 @@ export type TState = {
     Entity: TEntity
     OnDataFetching: boolean
     OnConfirmation: boolean
+    OnSaving: boolean
 }
 
 const initialState: TState = {
@@ -23,6 +24,7 @@ const initialState: TState = {
     Entity: defaultEntity,
     OnDataFetching: true,
     OnConfirmation: false,
+    OnSaving: false
 }
 
 export default initialState
