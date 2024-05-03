@@ -1,15 +1,16 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import styled from 'styled-components'
 import Card from '@/components/card/card'
+import Button from '@/components/button/button'
 import ImageQuestion from '@/public/assets/question.svg'
 import ImageRemove from '@/public/assets/remove.svg'
 import { ColorPallete } from '@/components/color'
 import { FontSize } from '@/components/font'
 
-const Backdrop = styled.div<{$open: boolean}>`
+const Backdrop = styled.div<{ $open: boolean }>`
     display: ${({ $open }) => $open ? 'flex' : 'none'};
     align-items: center;
     justify-content: center;
@@ -79,25 +80,61 @@ const ActionWrapper = styled.div`
     gap: 0.5rem;
 `
 
-// const ButtonAccept = styled(Button)`
-//     font-size: 0.7em;
-//     i{
-//         font-size: 1.5em;
-//         margin-right: 0.15rem;
-//     }
-// `
 
-// const ButtonDenied = styled(ButtonOutlineDanger)`
-//     font-size: 0.7em;
-//     i{
-//         font-size: 1.5em;
-//         margin-right: 0.15rem;
-//     }
-// `
-const ModalConfirmation = () => {
-  return (
-    <div>ModalConfirmation</div>
-  )
+interface IProps {
+    open: boolean
+    text?: string
+    type?: 'confirmation' | 'delete'
+    className?: string
+    onAccept: () => void
+    onDenied: () => void
+    onBackdropClick?: () => void
+}
+
+const ModalConfirmation: React.FC<IProps> = ({
+    open,
+    text = 'Confirmation?',
+    type = 'confirmation',
+    className = '',
+    onAccept,
+    onDenied,
+    onBackdropClick = () => { }
+}) => {
+    const [openModal, setOpenModal] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (open) {
+            setTimeout(() => {
+                setOpenModal(true)
+            }, 100);
+        } else {
+            setOpenModal(false)
+        }
+        return () => { setOpenModal(false) }
+    }, [open])
+    return (
+        <Backdrop className={className} $open={open} onClick={onBackdropClick}>
+            <ModalContainer onClick={(e) => { e.stopPropagation() }}>
+                <ModalContent className={`${openModal ? 'open' : ''}`}>
+                    {type === 'delete' ? <Image src={ImageRemove} alt='img-remove' priority /> : <Image src={ImageQuestion} alt='img-question' priority />}
+                    <ModalTitle>
+                        CONFIRMATION!
+                    </ModalTitle>
+                    <ModalText>
+                        {text}
+                    </ModalText>
+                    <ActionWrapper>
+                        <Button onClick={onAccept} type='success'>
+                            <span>YES</span>
+                        </Button>
+                        <Button onClick={onDenied} type='danger' fill='outline'>
+                            <span>CANCEL</span>
+                        </Button>
+                    </ActionWrapper>
+                </ModalContent>
+            </ModalContainer>
+        </Backdrop>
+    )
 }
 
 export default ModalConfirmation

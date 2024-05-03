@@ -34,4 +34,6 @@ export function mapToMetaPagination(meta: any): TMetaPagination {
     }
 }
 
+export type PayloadEntity = { key: string, value: any }
+
 

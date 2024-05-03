@@ -6,6 +6,16 @@ import Divider from '@/components/divider'
 import InputText from '@/components/input/text/group/text'
 import InputFile from '@/components/input/file/group/dropzone'
 import Button from '@/components/button/button.save'
+import ModalConfirmation from '@/components/modal/modal.confirmation'
+
+//redux import
+import {
+  MotorbikeCategoriesState,
+  SetEntity,
+  SetConfirmation
+} from '@/redux/motorbike-category/slice'
+// import { createNewCategory } from '@/redux/categories/action'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 const Container = styled.div`
   width: 100%;
@@ -25,6 +35,9 @@ const ButtonSave = styled(Button)`
 `
 
 const Form: React.FC = () => {
+  const StateMotorbikeCategory = useAppSelector(MotorbikeCategoriesState)
+  const dispatch = useAppDispatch()
+
   const [icon, setIcon] = useState<File | null>(null)
 
   const onReceiveFiles = (files: File[]) => {
@@ -35,13 +48,21 @@ const Form: React.FC = () => {
     }
   }
 
+  const onChangeEntity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(SetEntity({
+      key: 'Name',
+      value: e.currentTarget.value
+    }))
+  }
+
   return (
     <Container>
       <InputText
-        value=''
+        value={StateMotorbikeCategory.Entity.Name}
         label='Name'
         required
         validator=''
+        onChange={onChangeEntity}
       />
       <InputFile
         label='Thumbnail'
@@ -53,6 +74,12 @@ const Form: React.FC = () => {
       <ActionContainer>
         <ButtonSave onSave={false} />
       </ActionContainer>
+      <ModalConfirmation
+        open={StateMotorbikeCategory.OnConfirmation}
+        onAccept={() => { }}
+        onDenied={() => { }}
+        text='Are you sure to create new category?'
+      />
     </Container>
   )
 }
