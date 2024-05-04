@@ -32,3 +32,16 @@ export const Create = createAsyncThunk<APIResponse, { thumbnail: File | null }, 
         return rejectWithValue(ErrorParser(error))
     }
 })
+
+export const Delete = createAsyncThunk<APIResponse, void, ThunkConfig>('motorbikeCategory/Delete', async (_, { rejectWithValue, getState }) => {
+    try {
+        const state = getState()
+        const entity = state.motorbikeCategory.Entity
+        const id = entity.ID
+        const response = await axios.delete(`/api/motorbike-category/${id}`);
+        return response.data
+    } catch (error: any | AxiosError) {
+        return rejectWithValue(ErrorParser(error))
+    }
+})
+

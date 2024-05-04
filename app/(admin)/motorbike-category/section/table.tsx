@@ -1,15 +1,23 @@
 'use client'
 
 import React, { useCallback, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import styled from 'styled-components'
+import { ToastContainer } from 'react-toastify';
 import Datatable from '@/components/table/table'
+import TableAction from '@/components/table/action'
 import type { TColumn } from '@/components/table/util'
 import type { MotorbikeCategory } from '@/model/motorbike.category'
+import ModalConfirmation from '@/components/modal/modal.confirmation'
+import { showToast, ToastContent } from '@/components/toast'
+import { APIResponse } from '@/lib/util'
 
 import {
     MotorbikeCategoriesState,
+    SetConfirmation,
+    SetEntity
 } from '@/redux/motorbike-category/slice'
-import { FindAll } from '@/redux/motorbike-category/action'
+import { FindAll, Delete } from '@/redux/motorbike-category/action'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 const Container = styled.div`
@@ -18,6 +26,7 @@ const Container = styled.div`
 const Table: React.FC = () => {
     const StateMotorbikeCategory = useAppSelector(MotorbikeCategoriesState)
     const dispatch = useAppDispatch()
+    const router = useRouter()
 
     const Columns: Array<TColumn<MotorbikeCategory>> = [
         {
@@ -30,8 +39,48 @@ const Table: React.FC = () => {
             title: 'Name',
             selector: (row) => row.Name,
             sort: true
+        },
+        {
+            title: 'Action',
+            selector: (row, index) => {
+                const id: string = row.ID
+                return <TableAction
+                    onEdit={() => {
+                        router.push(`/motorbike-category/${id}`)
+                    }}
+                    onDelete={() => {
+                        dispatch(SetEntity({
+                            key: 'ID',
+                            value: id
+                        }))
+                        dispatch(SetConfirmation(true))
+                    }}
+                />
+            },
+            align: 'center',
+            width: '10rem'
         }
     ]
+
+    const onDelete = () => {
+        dispatch(Delete()).then(response => {
+            const payload: APIResponse = response.payload as APIResponse
+            switch (payload.code) {
+                case 200:
+                    showToast(<ToastContent theme='success' text={payload.message} />,
+                        {
+                            timeToClose: 2000,
+                        })
+                    break;
+                default:
+                    showToast(<ToastContent theme='error' text={payload.message} />,
+                        {
+                            timeToClose: 2000,
+                        })
+                    break;
+            }
+        })
+    }
 
     const initialPage = useCallback(() => {
         dispatch(FindAll())
@@ -55,6 +104,18 @@ const Table: React.FC = () => {
                 onProcess={StateMotorbikeCategory.OnDataFetching}
                 onPageChange={(page) => { }}
                 onPerpageChange={(perpage) => { }}
+            />
+            <ModalConfirmation
+                type='delete'
+                open={StateMotorbikeCategory.OnConfirmation}
+                onAccept={() => { onDelete() }}
+                onDenied={() => {
+                    dispatch(SetConfirmation(false))
+                }}
+                text='Are you sure to delete category?'
+            />
+            <ToastContainer
+                hideProgressBar
             />
         </Container>
     )

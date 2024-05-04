@@ -13,6 +13,10 @@ const slice = createSlice({
             if (action.payload.key === "Name") {
                 state.Entity.Name = action.payload.value as string
             }
+            
+            if (action.payload.key === "ID") {
+                state.Entity.ID = action.payload.value as string
+            }
         },
         SetConfirmation: (state, action: PayloadAction<boolean>) => {
             state.OnConfirmation = action.payload

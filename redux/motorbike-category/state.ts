@@ -2,11 +2,13 @@ import { MotorbikeCategory } from '@/model/motorbike.category'
 import { TPagination, InitialPagination } from '@/lib/redux'
 
 type TEntity = {
+    ID: string
     Name: string
 }
 
 const defaultEntity: TEntity = {
-    Name: ''
+    ID: '',
+    Name: '',
 }
 
 export type TState = {
