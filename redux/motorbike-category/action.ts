@@ -22,7 +22,28 @@ export const Create = createAsyncThunk<APIResponse, { thumbnail: File | null }, 
         if (thumbnail !== null) {
             form.append('thumbnail', thumbnail)
         }
-        const response = await axios.post('/api/motorbike-category', form,{
+        const response = await axios.post('/api/motorbike-category', form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response.data
+    } catch (error: any | AxiosError) {
+        return rejectWithValue(ErrorParser(error))
+    }
+})
+
+export const Update = createAsyncThunk<APIResponse, { thumbnail: File | null }, ThunkConfig>('motorbikeCategory/Update', async ({ thumbnail }, { rejectWithValue, getState }) => {
+    try {
+        const state = getState()
+        const entity = state.motorbikeCategory.Entity
+        const id = entity.ID
+        let form = new FormData()
+        form.append('name', entity.Name)
+        if (thumbnail !== null) {
+            form.append('thumbnail', thumbnail)
+        }
+        const response = await axios.put(`/api/motorbike-category/${id}`, form, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
