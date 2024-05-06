@@ -29,6 +29,7 @@ export default function RootLayout({
         </head>
         <body className={raleway.className}>
           <StyledComponentsRegistry>
+            
             <Sidebar />
             <Container>
               <Navbar />
