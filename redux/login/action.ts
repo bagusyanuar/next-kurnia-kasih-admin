@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios';
-import { APIResponse, ErrorParser } from '@/lib/util'
+import { APIResponse } from '@/lib/util'
+import { ErrorParser } from '@/lib/axios'
 import { ThunkConfig } from '@/lib/redux'
 import { LoginRequest } from '@/model/auth'
 

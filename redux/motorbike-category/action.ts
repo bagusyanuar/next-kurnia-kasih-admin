@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios';
-import { APIResponse, ErrorParser } from '@/lib/util'
+import { APIResponse } from '@/lib/util'
+import { ErrorParser } from '@/lib/axios'
 import { ThunkConfig } from '@/lib/redux'
 
 export const FindAll = createAsyncThunk<APIResponse, void, ThunkConfig>('motorbikeCategory/FindAll', async (_, { rejectWithValue, getState }) => {

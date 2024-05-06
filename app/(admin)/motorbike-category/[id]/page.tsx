@@ -4,12 +4,28 @@ import Divider from '@/components/divider'
 import TitleSection from './section/title'
 import HeaderSection from './section/header'
 import FormSection from './section/form'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import { APIResponse } from "@/lib/util"
+import { ErrorParser, AxiosInternalAPI } from "@/lib/axios"
+import { notFound, redirect } from 'next/navigation'
 
 export default async function UpdateMotorbikeCategoryPage({ params }: { params: { id: string } }) {
     const id: string = params.id
-    const response = await axios.get(`http://localhost:3000/api/motorbike-category/${id}`)
-    console.log(response);
+    const response = await AxiosInternalAPI.get(`/motorbike-category/${id}`)
+    return notFound()
+    try {
+        
+        
+        console.log(response.status);
+    } catch (error: any | AxiosError) {
+        if (axios.isAxiosError(error)) {
+            
+            return
+        }
+    }
+
+
+
     return (
         <MainContainer>
             <TitleSection />

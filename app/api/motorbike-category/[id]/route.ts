@@ -1,16 +1,18 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
-import { APIResponse, ErrorParser } from "@/lib/util"
+import { APIResponse } from "@/lib/util"
+import { ErrorParser } from "@/lib/axios"
+import { List } from '../dummy'
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     try {
         await new Promise((resolve) => setTimeout(resolve, 1500))
         const response: APIResponse = {
             code: 200,
-            data: params.id,
+            data: List[0],
             message: 'successfully show motorbike category',
             meta: null
         }
-        return Response.json(response, { status: 200 })
+        return Response.json(response, { status: 404 })
     } catch (error: any | AxiosError) {
         const response: APIResponse = ErrorParser(error)
         return Response.json(response, { status: response.code })

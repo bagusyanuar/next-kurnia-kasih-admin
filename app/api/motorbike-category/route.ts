@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
-import { APIResponse, ErrorParser } from "@/lib/util"
+import { APIResponse } from "@/lib/util"
+import { ErrorParser } from "@/lib/axios"
 import { List } from './dummy'
 
 export async function GET(request: Request) {
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
                 total_rows: List.length
             }
         }
-        return Response.json(response, {status: response.code})
+        return Response.json(response, { status: response.code })
     } catch (error: any | AxiosError) {
         const response: APIResponse = ErrorParser(error)
         return Response.json(response, { status: response.code })
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
             code: 200,
             message: 'successfully create motorbike categories',
         }
-        return Response.json(response, {status: response.code})
+        return Response.json(response, { status: response.code })
     } catch (error: any | AxiosError) {
         const response: APIResponse = ErrorParser(error)
         return Response.json(response, { status: response.code })

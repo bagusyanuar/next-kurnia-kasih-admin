@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder } from "@reduxjs/toolkit";
 import type { TState } from './state'
 import { FindAll, Create, Delete } from './action'
-import { MotorbikeCategory } from "@/model/motorbike.category";
+import { MotorbikeCategory, mapToMotorbikeCategories } from "@/model/motorbike.category";
 import { mapToMetaPagination } from '@/lib/redux'
 
 const onFindAllEvent = (builder: ActionReducerMapBuilder<TState>): ActionReducerMapBuilder<TState> => {
@@ -60,12 +60,3 @@ const event = (builder: ActionReducerMapBuilder<TState>) => {
 }
 
 export default event
-
-function mapToMotorbikeCategories(data: Array<any>): Array<MotorbikeCategory> {
-    return data.map((datum) => {
-        return {
-            ID: datum['id'] as string,
-            Name: datum['name'] as string
-        }
-    })
-}
