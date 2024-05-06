@@ -11,10 +11,10 @@ import { notFound, redirect } from 'next/navigation'
 
 export default async function UpdateMotorbikeCategoryPage({ params }: { params: { id: string } }) {
     const id: string = params.id
-    const response = await AxiosInternalAPI.get(`/motorbike-category/${id}`)
+    
     return notFound()
     try {
-        
+        const response = await AxiosInternalAPI.get(`/motorbike-category/${id}`)
         
         console.log(response.status);
     } catch (error: any | AxiosError) {

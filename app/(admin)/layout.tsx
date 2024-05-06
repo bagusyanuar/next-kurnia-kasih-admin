@@ -22,22 +22,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <html lang="en">
-        <head>
-          <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></link>
-        </head>
-        <body className={raleway.className}>
-          <StyledComponentsRegistry>
-            
-            <Sidebar />
-            <Container>
-              <Navbar />
-                {children}
-            </Container>
-          </StyledComponentsRegistry>
-        </body>
-      </html>
-    </Providers>
+    <>
+      <Sidebar />
+      <Container>
+        <Navbar />
+        {children}
+      </Container>
+
+    </>
   );
 }
