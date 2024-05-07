@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { ToastContainer } from 'react-toastify';
 import Divider from '@/components/divider'
@@ -18,6 +18,7 @@ import {
 } from '@/redux/motorbike-category/slice'
 import { Create } from '@/redux/motorbike-category/action'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { MotorbikeCategory } from '@/model/motorbike.category';
 
 const Container = styled.div`
   width: 100%;
@@ -36,7 +37,23 @@ const ButtonSave = styled(Button)`
     width: fit-content;
 `
 
-const Form: React.FC = () => {
+const FileContainer = styled.div`
+    display: flex;
+    gap: 1rem;
+`
+
+const ThumbnailContainer = styled.div`
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+`
+
+interface IProps {
+  category: MotorbikeCategory
+}
+
+const Form: React.FC<IProps> = ({ category }) => {
   const StateMotorbikeCategory = useAppSelector(MotorbikeCategoriesState)
   const dispatch = useAppDispatch()
 
@@ -82,6 +99,24 @@ const Form: React.FC = () => {
 
   }
 
+  const initialPage = useCallback(() => {
+
+    dispatch(SetEntity({
+      key: 'Name',
+      value: category.Name
+    }))
+    dispatch(SetEntity({
+      key: 'ID',
+      value: category.ID
+    }))
+
+  }, [category, dispatch])
+
+  useEffect(() => {
+    initialPage()
+    return () => { }
+  }, [initialPage])
+
   return (
     <Container>
       <InputText
@@ -91,12 +126,16 @@ const Form: React.FC = () => {
         validator=''
         onChange={onChangeEntity}
       />
-      <InputFile
-        label='Thumbnail'
-        onReceiveFiles={onReceiveFiles}
-        multiple={false}
-        maxSize={1000000}
-      />
+      <FileContainer>
+        <ThumbnailContainer></ThumbnailContainer>
+        <InputFile
+          label='Thumbnail'
+          onReceiveFiles={onReceiveFiles}
+          multiple={false}
+          maxSize={1000000}
+        />
+      </FileContainer>
+
       <Divider />
       <ActionContainer>
         <ButtonSave onSave={StateMotorbikeCategory.OnSaving} onClick={onSubmitEvent} />

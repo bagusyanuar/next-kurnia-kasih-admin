@@ -12,7 +12,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
             message: 'successfully show motorbike category',
             meta: null
         }
-        return Response.json(response, { status: 404 })
+        return Response.json(response, { status: 200 })
     } catch (error: any | AxiosError) {
         const response: APIResponse = ErrorParser(error)
         return Response.json(response, { status: response.code })

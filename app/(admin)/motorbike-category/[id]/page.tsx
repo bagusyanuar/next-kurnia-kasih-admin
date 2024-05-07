@@ -8,23 +8,25 @@ import axios, { AxiosError } from 'axios'
 import { APIResponse } from "@/lib/util"
 import { ErrorParser, AxiosInternalAPI } from "@/lib/axios"
 import { notFound, redirect } from 'next/navigation'
+import { MotorbikeCategory, mapToMotorbikeCategory } from '@/model/motorbike.category'
 
 export default async function UpdateMotorbikeCategoryPage({ params }: { params: { id: string } }) {
     const id: string = params.id
-    
-    return notFound()
+    let category: MotorbikeCategory = {
+        ID: '',
+        Name: ''
+    }
     try {
         const response = await AxiosInternalAPI.get(`/motorbike-category/${id}`)
-        
-        console.log(response.status);
+        const data: any = response.data.data
+        category = mapToMotorbikeCategory(data)
+        console.log(response.data);
     } catch (error: any | AxiosError) {
         if (axios.isAxiosError(error)) {
-            
-            return
+
+            return notFound()
         }
     }
-
-
 
     return (
         <MainContainer>
@@ -32,7 +34,7 @@ export default async function UpdateMotorbikeCategoryPage({ params }: { params: 
             <Content>
                 <HeaderSection />
                 <Divider />
-                <FormSection />
+                <FormSection category={category} />
             </Content>
         </MainContainer>
     )
