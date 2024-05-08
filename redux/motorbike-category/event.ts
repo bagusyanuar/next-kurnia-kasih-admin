@@ -1,6 +1,6 @@
 import { ActionReducerMapBuilder } from "@reduxjs/toolkit";
 import type { TState } from './state'
-import { FindAll, Create, Delete } from './action'
+import { FindAll, Create, Delete, Update } from './action'
 import { MotorbikeCategory, mapToMotorbikeCategories } from "@/model/motorbike.category";
 import { mapToMetaPagination } from '@/lib/redux'
 
@@ -40,6 +40,19 @@ const onCreateEvent = (builder: ActionReducerMapBuilder<TState>): ActionReducerM
     })
 }
 
+const onUpdateEvent = (builder: ActionReducerMapBuilder<TState>): ActionReducerMapBuilder<TState> => {
+    return builder.addCase(Update.pending, (state) => {
+        state.OnConfirmation = false
+        state.OnSaving = true
+    }).addCase(Update.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        state.OnSaving = false
+    }).addCase(Update.rejected, (state, { payload }) => {
+        console.log(payload);
+        state.OnSaving = false
+    })
+}
+
 const onDeleteEvent = (builder: ActionReducerMapBuilder<TState>): ActionReducerMapBuilder<TState> => {
     return builder.addCase(Delete.pending, (state) => {
         state.OnConfirmation = false
@@ -56,6 +69,7 @@ const onDeleteEvent = (builder: ActionReducerMapBuilder<TState>): ActionReducerM
 const event = (builder: ActionReducerMapBuilder<TState>) => {
     onFindAllEvent(builder);
     onCreateEvent(builder);
+    onUpdateEvent(builder);
     onDeleteEvent(builder);
 }
 

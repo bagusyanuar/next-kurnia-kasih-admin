@@ -37,6 +37,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
     try {
+        const form = await request.formData()
         await new Promise((resolve) => setTimeout(resolve, 1500))
         const response: APIResponse = {
             code: 200,

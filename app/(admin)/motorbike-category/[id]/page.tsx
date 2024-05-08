@@ -14,18 +14,26 @@ export default async function UpdateMotorbikeCategoryPage({ params }: { params: 
     const id: string = params.id
     let category: MotorbikeCategory = {
         ID: '',
-        Name: ''
+        Name: '',
+        Thumbnail: null
     }
     try {
         const response = await AxiosInternalAPI.get(`/motorbike-category/${id}`)
         const data: any = response.data.data
         category = mapToMotorbikeCategory(data)
-        console.log(response.data);
     } catch (error: any | AxiosError) {
         if (axios.isAxiosError(error)) {
-
-            return notFound()
+            const status = error.response?.status
+            switch (status) {
+                case 401:
+                    return redirect('/')
+                case 404:
+                    return notFound()
+                default:
+                    throw new Error("axios internal server error");
+            }
         }
+        throw new Error("internal server error");
     }
 
     return (

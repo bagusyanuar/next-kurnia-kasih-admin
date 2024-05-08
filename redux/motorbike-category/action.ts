@@ -55,6 +55,7 @@ export const Update = createAsyncThunk<APIResponse, { thumbnail: File | null }, 
     }
 })
 
+
 export const Delete = createAsyncThunk<APIResponse, void, ThunkConfig>('motorbikeCategory/Delete', async (_, { rejectWithValue, getState }) => {
     try {
         const state = getState()
