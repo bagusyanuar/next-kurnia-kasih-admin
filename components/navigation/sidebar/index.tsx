@@ -42,8 +42,9 @@ const Sidebar = () => {
             <SidebarBrand />
             <ItemContaier>
                 <SidebarItem to='/dashboard' text='Dashboard' icon='ri-dashboard-fill' className={`${pathName.startsWith('/dashboard') ? 'active' : ''}`} />
+                <SidebarItem to='/category' text='Category' icon='ri-price-tag-line' className={`${pathName.startsWith('/category') ? 'active' : ''}`} />
                 <SidebarItem to='/motorbike-category' text='Motorbike Category' icon='ri-price-tag-line' className={`${pathName.startsWith('/motorbike-category') ? 'active' : ''}`} />
-                <SidebarItem to='/category' text='Utility Category' icon='ri-bookmark-line' />
+                <SidebarItem to='/utility-category' text='Utility Category' icon='ri-bookmark-line' className={`${pathName.startsWith('/utility-category') ? 'active' : ''}`} />
                 <SidebarItem to='/product' text='Motorbike Product' icon='ri-motorbike-line' />
                 <SidebarItem to='/product' text='Utility Product' icon='ri-instance-line' />
                 <SidebarItem to='/product' text='User Account' icon='ri-user-line' />
